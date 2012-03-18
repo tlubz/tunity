@@ -35,15 +35,17 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-group :test, :development do
+group :development, :test do
   # Pretty printed test output
   gem 'turn', '0.8.2', :require => false
-  gem 'pry'
   gem 'ZenTest', '~> 4.6.1' # autotest lives here
   gem 'spork', '~> 0.9.0.rc'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.6.0'
+  gem 'shoulda'
   gem 'rr'
-  gem 'machinist'
+  gem 'machinist', '~>1.0.6'
   gem 'faker'
-  gem 'sham'
+  gem 'pry'
+  gem 'gist'
+  gem 'timecop' # Testing time sensitive behavior
 end
