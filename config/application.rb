@@ -44,5 +44,8 @@ module Tunity
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Youtube api key
+    config.youtube_api_key = 'AI39si6g5b4zzhKkv9ZklIEFPJTqtL5PGMkCyKxVaA_H9tIASNsWenEAFp9X6bTrhOO0MmlVcGhQQn3kcxowkr4BbGHMzEwUCQ'
   end
 end
