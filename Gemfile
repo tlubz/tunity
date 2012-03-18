@@ -35,7 +35,15 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-group :test do
+group :test, :development do
   # Pretty printed test output
   gem 'turn', '0.8.2', :require => false
+  gem 'pry'
+  gem 'ZenTest', '~> 4.6.1' # autotest lives here
+  gem 'spork', '~> 0.9.0.rc'
+  gem 'rspec-rails'
+  gem 'rr'
+  gem 'machinist'
+  gem 'faker'
+  gem 'sham'
 end

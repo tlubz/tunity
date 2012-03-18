@@ -14,5 +14,7 @@
 /log/*.log
 /tmp
 
+# ignore local config
 key
 key.pub
+.autotest
