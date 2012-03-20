@@ -1,6 +1,6 @@
 class TracksController < ApplicationController
   include TracksHelper
   def search
-    render :json => find_matching_videos(params[:query])
+    render :json => format_videos_json(find_matching_videos(params[:query]))
   end
 end
