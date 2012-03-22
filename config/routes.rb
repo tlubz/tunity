@@ -57,5 +57,6 @@ Tunity::Application.routes.draw do
   # match ':controller(/:action(/:id(.:format)))'
 
   match 'tracks/search' => 'tracks#search'
+  match 'tracks' => 'tracks#index'
 
 end
