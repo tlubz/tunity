@@ -13,6 +13,14 @@ gem 'pg'
 gem 'youtube_it'
 
 
+##
+# redis
+#
+# hiredis is a high performance redis driver that supports timeouts on a socket
+gem "hiredis", "~> 0.3.1"
+gem "redis", "~> 2.2.0", :require => ["redis/connection/hiredis", "redis"]
+
+
 # Gems used only for assets and not required
 # in production environments by default.
 #group :assets do
