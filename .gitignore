@@ -19,3 +19,7 @@ key
 key.pub
 .autotest
 *.swp
+
+.idea/*
+.idea
+

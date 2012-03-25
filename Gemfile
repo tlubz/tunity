@@ -9,8 +9,8 @@ gem 'pg'
 
 
 # application gems
-# youtube gem
-gem 'youtube_it'
+gem 'devise' # user management
+gem 'youtube_it'  # youtube integration
 
 
 ##
