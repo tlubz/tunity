@@ -23,6 +23,8 @@ Spork.prefork do
     # needed for machinist ... moved from prefork
     config.before(:all)    { Sham.reset(:before_all)  }
     config.before(:each)   { Sham.reset(:before_each) }
+
+    config.use_transactional_fixtures = true
    end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120326005911) do
+ActiveRecord::Schema.define(:version => 20120326014604) do
 
   create_table "plays", :force => true do |t|
     t.string   "youtube_id"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(:version => 20120326005911) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "requests", ["user_id", "youtube_id"], :name => "unique_user_and_video", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
