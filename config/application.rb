@@ -53,4 +53,3 @@ module Tunity
   end
 end
 
-silence_warnings { IRB = Pry }
