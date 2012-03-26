@@ -30,4 +30,23 @@ describe Request do
       end
     end
   end
+
+  describe '.play_next' do
+    let(:next_id) { Sham.youtube_id }
+
+    before do
+      stub(Request).next_youtube_id { next_id }
+    end
+
+    it 'should add a Play record for the next youtube id' do
+      mock(Play).create!(:youtube_id => next_id)
+      Request.play_next
+    end
+
+    it 'should remove all requests for the next id' do
+      Request.make(:user => User.make, :youtube_id => next_id)
+      Request.play_next
+      Request.where(:youtube_id => next_id).count.should == 0
+    end
+  end
 end

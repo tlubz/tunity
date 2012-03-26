@@ -19,4 +19,14 @@ class Request < ActiveRecord::Base
           order(:created_at).first.youtube_id
     end
   end
+
+
+  def self.play_next
+    play_video(next_youtube_id)
+  end
+
+  def self.play_video(youtube_id)
+    where(:youtube_id => youtube_id).delete_all
+    Play.create!(:youtube_id => youtube_id)
+  end
 end
