@@ -64,5 +64,6 @@ Tunity::Application.routes.draw do
 
   match 'tracks/search' => 'tracks#search'
   match 'tracks' => 'tracks#index'
+  match 'tracks/add' => 'tracks#add'
 
 end

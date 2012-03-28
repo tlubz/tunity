@@ -1,0 +1,11 @@
+<form method='get'>
+    Track Name or Keyword: <input type='text' name='query' value='<%= @query %>' />
+</form>
+
+<ol>
+    <% @videos.each do |vid| %>
+        <li>
+          <%= link_to vid[:title], :action => :add, :id => vid[:unique_id] %>
+        </li>
+    <% end %>
+</ol>

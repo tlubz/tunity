@@ -1,2 +1,5 @@
 <h1>tunity</h1>
 <p>simple social radio</p>
+<form method='get' action='<%= url_for(:controller => :tracks, :action => :search)%>' >
+  Find Music: <input type='text' name='query'/>
+</form>
