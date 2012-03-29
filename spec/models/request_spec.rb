@@ -49,4 +49,26 @@ describe Request do
       Request.where(:youtube_id => next_id).count.should == 0
     end
   end
+
+  describe '.get_next_videos' do
+    it 'should return the next some videos' do
+      now = Time.now
+      requests = [Request.make(:created_at => now - 2),
+                  Request.make(:created_at => now - 1),
+                  Request.make(:created_at => now)]
+      Request.get_next.should == requests
+    end
+
+    it 'should return them in the right order when there are multiple for the same ytid' do
+      now = Time.now
+      youtube_id = Sham.youtube_id
+      requests = [Request.make(:created_at => now - 3),
+                  Request.make(:created_at => now - 2),
+                  Request.make(:created_at => now - 1, :youtube_id => youtube_id)]
+      Request.make(:created_at => now, :youtube_id => youtube_id)
+      expected_requests = requests[0..1]
+      expected_requests.unshift(requests[2])
+      Request.get_next.should == expected_requests
+    end
+  end
 end
