@@ -6,6 +6,7 @@ Sham.define do
 
   email { Faker::Internet.email }
   name { Faker::Name::name }
+  song_title { Faker::Lorem::words(2).join(' - ') }
   password { Faker::Lorem::words.join[0,15] }
   id {(rand * 900001243173116).to_i}
   small_id { (rand * 100000).to_i }

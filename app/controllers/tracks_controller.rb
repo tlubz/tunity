@@ -7,7 +7,9 @@ class TracksController < ApplicationController
   end
 
   def add
-
+    Request.create!(:user => current_user, :youtube_id => params[:id])
+    flash[:notice] = "Added #{find_video(params[:id]).title} to the vine"
+    redirect_to :controller => :home, :action => :index
   end
 
   def search
