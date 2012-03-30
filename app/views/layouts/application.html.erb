@@ -19,5 +19,7 @@
 
 <%= yield %>
 
+<%= inline_jsonp('tunity.setConfig', js_config) %>
+<%= inline_jsonp('tunity.setPageVars', js_page_vars) %>
 </body>
 </html>

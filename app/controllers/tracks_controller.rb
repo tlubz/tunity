@@ -6,6 +6,10 @@ class TracksController < ApplicationController
   def index
   end
 
+  def play
+     js_page_vars[:youtube_id] = params[:id]
+  end
+
   def add
     Request.create!(:user => current_user, :youtube_id => params[:id])
     flash[:notice] = "Added #{find_video(params[:id]).title} to the vine"

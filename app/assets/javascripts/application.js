@@ -7,3 +7,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+var tunity = {
+    config : {},
+    pageVars : {}
+}
+
+tunity.setConfig = function(args) {
+    tunity.config = args;
+}
+
+tunity.setPageVars = function(args) {
+    tunity.pageVars = args;
+}

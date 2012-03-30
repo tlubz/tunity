@@ -62,8 +62,11 @@ Tunity::Application.routes.draw do
 
   root :to => "home#index"
 
-  match 'tracks/search' => 'tracks#search'
-  match 'tracks' => 'tracks#index'
-  match 'tracks/add' => 'tracks#add'
+  scope 'tracks', :controller => 'tracks' do
+    get 'search'
+    get '/', :action => 'index'
+    get 'add'
+    get 'play'
+  end
 
 end

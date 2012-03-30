@@ -51,4 +51,13 @@ describe TracksController do
       Request.where(:youtube_id => id, :user_id => user.id).should be_present
     end
   end
+
+  describe 'GET play' do
+    let(:id) { Sham.youtube_id }
+
+    it 'sets youtube id as javascript var' do
+      get :play, :id => id
+      controller.js_page_vars[:youtube_id].should == id
+    end
+  end
 end

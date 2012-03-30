@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :set_js_config, :initialize_js_page_vars
+
+  attr_accessor :js_page_vars
+  attr_reader :js_config
+
   def authenticate_user!
     session[:sign_in_last_url] = request.fullpath
     super
@@ -16,6 +21,16 @@ class ApplicationController < ActionController::Base
     else
       super
     end
+  end
+
+  # set the js config vars
+  def set_js_config
+    @js_config = {}
+  end
+
+  # set the js page vars before running controllers
+  def initialize_js_page_vars
+    @js_page_vars = {}
   end
 
 end

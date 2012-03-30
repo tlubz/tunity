@@ -1,15 +1,8 @@
 <h1>tunity</h1>
 <p>simple social radio</p>
-<form method='get' action='<%= url_for(:controller => :tracks, :action => :search)%>' >
-  find Music: <input type='text' name='query'/>
-</form>
+<%= form_tag({:controller => :tracks, :action => :search}, :method => :get) do %>
+    <%= text_field_tag(:query) %>
+<% end %>
 
 <h2>now playing:</h2>
-<ol>
-  <% @track_list.each do |item| %>
-    <li>
-      <span class="title"><%= item[:video].title %></span>
-      <span class="requester">requested by <%= item[:user].email %></span>
-    </li>
-  <% end %>
-</ol>
+<%= render :partial => 'track_list', :object => @track_list %>
