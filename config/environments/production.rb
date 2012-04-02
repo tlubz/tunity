@@ -14,8 +14,8 @@ Tunity::Application.configure do
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
-  # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  # use assets pipeline.  make this false to require precompiled assets
+  config.assets.compile = true
 
   # Generate digests for assets URLs
   config.assets.digest = true
