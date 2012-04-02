@@ -43,6 +43,14 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
+# for assets compilation
+group :assets do
+  gem 'therubyracer'
+  gem 'sass-rails', "  ~> 3.1.0"
+  gem 'coffee-rails', "~> 3.1.0"
+  gem 'uglifier'
+end
+
 group :development, :test do
   # Pretty printed test output
   gem 'turn', '0.8.2', :require => false
