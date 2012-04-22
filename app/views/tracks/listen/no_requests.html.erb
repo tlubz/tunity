@@ -1,0 +1,4 @@
+<p>no next track to play :( search for something to add:</p>
+<%= form_tag({:controller => :tracks, :action => :search}, :method => :get) do %>
+    <%= text_field_tag(:query) %>
+<% end %>

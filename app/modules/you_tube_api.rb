@@ -11,19 +11,31 @@ module YouTubeApi
   module ModuleAndInstanceMethods
     # perform the youtube video search by query term
     def find_matching_videos(query)
-      client.videos_by(:query => query,         # search for the query
-                       :categories => [:music], # it must be music
-                       :format => 5)            # it must be embeddable
+      safely do
+        client.videos_by(:query => query,         # search for the query
+                         :categories => [:music], # it must be music
+                         :format => 5)            # it must be embeddable
+      end
     end
 
     # find a video by id
     def find_video(id)
-      client.video_by(id)
+      safely do
+        client.video_by(id)
+      end
     end
 
     # reference to the youtube api client
     def client
       @youtube_api ||= YouTubeIt::Client.new(:dev_key => Rails.application.config.youtube_api_key)
+    end
+
+    # wrap api calls in an exception handling block
+    def safely
+      yield if block_given?
+    rescue => e
+      Rails.logger.warn(e)
+      nil
     end
   end
   extend ModuleAndInstanceMethods

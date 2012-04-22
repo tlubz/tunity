@@ -4,5 +4,9 @@
     <%= text_field_tag(:query) %>
 <% end %>
 
+<p>
+  <%= link_to 'listen', :controller => :tracks, :action => :listen %>
+</p>
+
 <h2>now playing:</h2>
 <%= render :partial => 'track_list', :object => @track_list %>

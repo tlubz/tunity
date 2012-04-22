@@ -1,10 +1,11 @@
 class HomeController < ApplicationController
   include TracksHelper
   def index
-    @track_list = Request.get_next.map do |request|
+    @track_list = Request.next_requests.map do |request|
       {
-          :video => YouTubeApi.find_video(request.youtube_id),
-          :user => request.user
+        :video => request.video,
+        :user => request.user,
+        :status => request.status,
       }
     end
   end

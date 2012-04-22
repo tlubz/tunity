@@ -67,6 +67,7 @@ Tunity::Application.routes.draw do
     get '/', :action => 'index'
     get 'add'
     get 'play'
+    get 'listen'
   end
 
 end

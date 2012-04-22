@@ -9,66 +9,91 @@ describe Request do
     Request.make(:user => User.make, :youtube_id => id)
   end
 
-  describe '.next_youtube_id' do
-    let(:youtube_id_1) { Sham.youtube_id }
-    let(:youtube_id_2) { Sham.youtube_id }
-    it 'should get the youtube id with the most users associated with it' do
-      Request.make(:user => User.make, :youtube_id => youtube_id_1)
-      Request.make(:user => User.make, :youtube_id => youtube_id_1)
-      Request.make(:user => User.make, :youtube_id => youtube_id_2)
-      Request.next_youtube_id.should == youtube_id_1
-    end
-
-    context 'when there is no winner by user count' do
-      before do
-        now = Time.now
-        Request.make(:user => User.make, :youtube_id => youtube_id_1, :created_at => now - 2.days)
-        Request.make(:user => User.make, :youtube_id => youtube_id_2, :created_at => now)
-      end
-      it 'should get the youtube id with the earliest timestamp' do
-        Request.next_youtube_id.should == youtube_id_1
-      end
-    end
-  end
-
   describe '.play_next' do
-    let(:next_id) { Sham.youtube_id }
-
     before do
-      stub(Request).next_youtube_id { next_id }
+      now = Time.now
+      @first_request = Request.make(:created_at => now - 1)
+      Request.make(:created_at => now)
     end
 
-    it 'should add a Play record for the next youtube id' do
-      mock(Play).create!(:youtube_id => next_id)
+    it 'should mark the record as playing' do
+      next_request = Request.next
       Request.play_next
+      next_request.reload
+      next_request.should be_playing
     end
 
-    it 'should remove all requests for the next id' do
-      Request.make(:user => User.make, :youtube_id => next_id)
+    it 'should set played_at to now' do
+      now = Time.now
+      stub(Time).now { now }
+      next_request = Request.next
       Request.play_next
-      Request.where(:youtube_id => next_id).count.should == 0
+      next_request.reload
+      next_request.played_at.to_i.should == now.to_i
+    end
+
+    it 'should mark any playing requests as done' do
+      playing_request = Request.make.tap{ |r| r.play! }
+      Request.play_next
+      playing_request.reload
+      playing_request.should_not be_playing
+      playing_request.should be_done
     end
   end
 
-  describe '.get_next_videos' do
-    it 'should return the next some videos' do
+  describe '.next' do
+    it 'should return the next record by play time' do
       now = Time.now
-      requests = [Request.make(:created_at => now - 2),
-                  Request.make(:created_at => now - 1),
-                  Request.make(:created_at => now)]
-      Request.get_next.should == requests
+      first_request = Request.make(:created_at => now - 1)
+      Request.make(:created_at => now)
+      Request.next.should == first_request
+    end
+  end
+
+  describe '.next_requests' do
+    it 'should return the next few requests' do
+      now = Time.now
+      requests = 0.upto(2).map do |n|
+        Request.make(:created_at => now - 2 + n)
+      end
+      Request.next_requests.should == requests
+    end
+  end
+
+  describe '#video' do
+    it 'should get the youtube video associated with the youtube id' do
+      r = Request.make
+      vid = YouTubeIt::Model::Video.new({})
+      stub(YouTubeApi).find_video(r.youtube_id) { vid }
+      r.video.should == vid
+    end
+  end
+
+  describe '.where?' do
+    it 'should return whatever the currently playing track is, and the position in the track' do
+      now = Time.now
+      position = 50.seconds
+      Request.make(:created_at => now)
+      r = Request.make(:status => :playing, :created_at => now - 100, :played_at => now - position)
+      stub(YouTubeApi).find_video.stub!.duration { 200.seconds }
+
+      Request.where?.request.should == r
+      Request.where?.position.should == position
     end
 
-    it 'should return them in the right order when there are multiple for the same ytid' do
+    it 'should return nil if there is no currently playing track or if it is finished' do
       now = Time.now
-      youtube_id = Sham.youtube_id
-      requests = [Request.make(:created_at => now - 3),
-                  Request.make(:created_at => now - 2),
-                  Request.make(:created_at => now - 1, :youtube_id => youtube_id)]
-      Request.make(:created_at => now, :youtube_id => youtube_id)
-      expected_requests = requests[0..1]
-      expected_requests.unshift(requests[2])
-      Request.get_next.should == expected_requests
+      position = 500.seconds
+      duration = 300.seconds
+      request = Request.make(:played_at => now - position)
+      stub(request).video.stub!.duration { duration }
+      stub(Request).playing.stub!.first { request }
+
+      Request.where?.should be_nil
+    end
+
+    it 'should return nil if there are no more tracks to play' do
+      Request.where?.should be_nil
     end
   end
 end
