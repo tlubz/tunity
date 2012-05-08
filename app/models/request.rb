@@ -7,10 +7,11 @@ class Request < ActiveRecord::Base
   end
 
   # put the next video on the now playing list
+  # return played request, or nil otherwise
   def self.play_next
     playing.update_all(:status => :done)
     next_request = self.next
-    next_request.play!
+    next_request && next_request.play!
   end
 
   # get the next n requests oldest first
@@ -38,11 +39,13 @@ class Request < ActiveRecord::Base
   # mark this as playing
   def play!
     update_attributes!(:status => :playing, :played_at => Time.now)
+    self
   end
 
   # mark this as finished
   def finish!
     update_attributes!(:status => :done)
+    self
   end
 
   def playing?

@@ -80,7 +80,7 @@ describe TracksController do
       next_request = Request.make
       stub(Request).where? { nil }
       stub(Request).playing { [next_request] }
-      stub(Request).play_next
+      stub(Request).play_next { next_request }
       mock.proxy(controller).redirect_to(:action => :play, :id => next_request.youtube_id, :pos => 0)
       get :listen
     end

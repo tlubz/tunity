@@ -12,8 +12,7 @@ class TracksController < ApplicationController
       redirect_to :action => :play,
                   :id => song_position.request.youtube_id,
                   :pos => song_position.position
-    elsif Request.next
-      Request.play_next
+    elsif Request.play_next
       redirect_to :action => :play,
                   :id => Request.playing.first.youtube_id,
                   :pos => 0
