@@ -2,11 +2,16 @@
 <p>simple social radio</p>
 <%= form_tag({:controller => :tracks, :action => :search}, :method => :get) do %>
     <%= text_field_tag(:query) %>
+    <%= submit_tag("search for tracks") %>
 <% end %>
 
 <p>
-  <%= link_to 'listen', :controller => :tracks, :action => :listen %>
+  <%= link_to('listen', {:controller => :tracks, :action => :listen}, :target => '_blank') %>
 </p>
 
-<h2>now playing:</h2>
-<%= render :partial => 'track_list', :object => @track_list %>
+<% if @track_list.present? %>
+    <h2>now playing:</h2>
+    <%= render :partial => 'track_list', :object => @track_list %>
+<% else %>
+    <h2>so much music. so little time</h2>
+<% end %>

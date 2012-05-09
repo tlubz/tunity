@@ -2,24 +2,26 @@
 <html>
 <head>
   <title>Tunity</title>
-  <%= stylesheet_link_tag    "application" %>
+  <%= stylesheet_link_tag    "application"%>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<% if user_signed_in? %>
-  <p class="user">Logged in as <%= current_user.email %> (<%= link_to 'Log out', destroy_user_session_path %>)</p>
-<% else %>
-  <p class="sign-in"><%= link_to 'Sign in!', new_user_session_path %></p>
-<% end %>
+    <div id="top-nav">
+        <% if user_signed_in? %>
+          <div class="user">Logged in as <%= current_user.email %> (<%= link_to 'Log out', destroy_user_session_path %>)</div>
+        <% else %>
+          <div class="sign-in"><%= link_to 'Sign in!', new_user_session_path %></div>
+        <% end %>
+    </div>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
 
-<%= yield %>
+    <%= yield %>
 
-<%= inline_jsonp('tunity.setConfig', js_config) %>
-<%= inline_jsonp('tunity.setPageVars', js_page_vars) %>
+    <%= inline_jsonp('tunity.setConfig', js_config) %>
+    <%= inline_jsonp('tunity.setPageVars', js_page_vars) %>
 </body>
 </html>

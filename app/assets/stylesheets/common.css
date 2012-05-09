@@ -1,0 +1,12 @@
+body {
+    font-family: Helvetica;
+    text-shadow: 1px 1px 2px #999;
+    background-color: #EFEFEF;
+    margin: 10px 200px 10px 200px;
+}
+
+h1,h2,h3,h4,h5,h6 { font-style: italic; }
+
+#top-nav { float: right; }
+
+.track-list .playing { font-weight: bold; padding-bottom: 10px; font-size: 110%}

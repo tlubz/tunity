@@ -1,11 +1,10 @@
-<% logger.info track_list %>
-<ol>
+<ol class='track-list'>
   <% track_list.each do |item| %>
     <li>
-      <span class="<%= item[:status] || 'requested' %>">
+      <div class="<%= item[:status] || 'requested' %>">
           <span class="title"><%= item[:video].title %></span>
           <span class="requester">requested by <%= item[:user].email %></span>
-      </span>
+      </div>
     </li>
   <% end %>
 </ol>

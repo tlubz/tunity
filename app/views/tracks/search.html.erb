@@ -1,11 +1,17 @@
 <form method='get'>
     Track Name or Keyword: <input type='text' name='query' value='<%= @query %>' />
+    <%= submit_tag("search for tracks") %>
 </form>
 
-<ol>
-    <% @videos.each do |vid| %>
-        <li>
-          <%= link_to vid[:title], :action => :add, :id => vid[:unique_id] %>
-        </li>
-    <% end %>
-</ol>
+<% if @videos.present? %>
+    <h2>results</h2>
+    <ol>
+        <% @videos.each do |vid| %>
+            <li>
+              <%= link_to vid[:title], :action => :add, :id => vid[:unique_id] %>
+            </li>
+        <% end %>
+    </ol>
+<% else %>
+    <h2>no results!  search betterly!</h2>
+<% end %>
