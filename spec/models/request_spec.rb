@@ -9,6 +9,13 @@ describe Request do
     Request.make(:user => User.make, :youtube_id => id)
   end
 
+  it 'should allow new requests for the same song if all other requests have been played' do
+    user = User.make
+    id = Sham.youtube_id
+    Request.make(:user => user, :youtube_id => id, :status => :done)
+    Request.make(:user => user, :youtube_id => id)
+  end
+
   describe '.play_next' do
     before do
       now = Time.now
